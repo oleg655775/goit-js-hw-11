@@ -9,38 +9,37 @@ import {
 } from './js/render-functions';
 
 const form = document.querySelector('.form');
+const searchInput = form.querySelector('[name="search-text"]');
 
 form.addEventListener('submit', submitHandler);
 
-function submitHandler(e) {
+async function submitHandler(e) {
   e.preventDefault();
 
-  const { ['search-text']: searchInput } = e.target.elements;
   const searchInputValue = searchInput.value.trim();
 
-  if (!searchInputValue.length) {
+  if (!searchInputValue) {
     return;
   }
 
   showLoader();
+  clearGallery();
 
-  getImagesByQuery(searchInputValue)
-    .then(data => {
-      if (!data.length) {
-        throw new Error('No images found!');
-      }
-      createGallery(data);
-    })
-    .catch(error => {
-      clearGallery();
-      iziToast.error({
-        message: error.message,
-        position: 'topRight',
-      });
-    })
-    .finally(() => {
-      hideLoader();
+  try {
+    const data = await getImagesByQuery(searchInputValue);
+
+    if (!data.length) {
+      throw new Error('No images found!');
+    }
+
+    createGallery(data);
+  } catch (error) {
+    iziToast.error({
+      message: error.message,
+      position: 'topRight',
     });
-
-  form.reset();
+  } finally {
+    hideLoader();
+    form.reset();
+  }
 }
