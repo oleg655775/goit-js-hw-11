@@ -1,0 +1,72 @@
+.gallery {
+  display: grid;
+  gap: 1.5rem;
+  max-width: max-content;
+}
+
+@media screen and (min-width: 48em) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 64em) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.gallery-item {
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  grid-template-rows: repeat(2, auto);
+  border: 1px solid #808080;
+}
+
+.gallery-item .link {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+}
+
+.gallery-item .link img {
+  aspect-ratio: 9/5;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+
+.gallery-item .information {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  text-align: center;
+  background: #fff;
+  padding-top: 0.25rem;
+}
+
+.gallery-item .information h4 {
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 1.33333;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.gallery-item .information p {
+  font-size: 0.75rem;
+  line-height: 2;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.gallery-item .like {
+  grid-column: 1;
+}
+.gallery-item .views {
+  grid-column: 2;
+}
+.gallery-item .comments {
+  grid-column: 3;
+}
+.gallery-item .downloads {
+  grid-column: 4;
+}
